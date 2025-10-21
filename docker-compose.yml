@@ -47,23 +47,30 @@ services:
 
   # Microserviço de Transações
   transactions-service:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./transactions-service:/app
-    command: echo "Transactions service placeholder - Configure seu serviço aqui"
+    build:
+      context: ./transactions-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
     environment:
-      - DATABASE_URL=postgresql://loomibank:loomibank123@postgres:5432/loomibank
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=loomibank
+      - DB_PASSWORD=loomibank123
+      - DB_DATABASE=loomibank
       - RABBITMQ_URL=amqp://loomibank:loomibank123@rabbitmq:5672
+      - USERS_API=http://users-service:3000
     depends_on:
       - postgres
       - rabbitmq
+      - users-service
     networks:
       - loomibank-network
 
 volumes:
   postgres_data:
   rabbitmq_data:
+
 
 networks:
   loomibank-network:
