@@ -1,11 +1,11 @@
 // Make Jest's test functions available globally
 require('@jest/globals');
-const { redis } = require('../src/config/redis');
 
 // Mock AppDataSource
 jest.mock('../src/config/database', () => ({
     AppDataSource: {
         getRepository: jest.fn(),
+        createEntityManager: jest.fn(),
         destroy: jest.fn().mockResolvedValue(undefined),
     },
 }));
@@ -20,11 +20,14 @@ jest.mock('../src/config/redis', () => ({
     },
 }));
 
-// Mock RabbitMQ events
-jest.mock('../src/services/EventService', () => ({
-    EventService: {
-        publishUserUpdated: jest.fn(),
-    },
+// Mock logger
+jest.mock('../src/utils/logger', () => ({
+    logger: {
+        info: jest.fn(),
+        error: jest.fn(),
+        debug: jest.fn(),
+        warn: jest.fn()
+    }
 }));
 
 // Clear all mocks before each test
@@ -32,7 +35,7 @@ beforeEach(() => {
     jest.clearAllMocks();
 });
 
-// Close connections after all tests
+// Mock cleanup after all tests
 afterAll(async () => {
-    await redis.quit();
+    // Cleanup mocks if needed
 });

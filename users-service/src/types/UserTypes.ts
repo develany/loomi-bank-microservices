@@ -11,7 +11,7 @@ export interface UserData {
   email: string;
   address?: string;
   bankingDetails?: UserBankingDetails;
-  profilePicture?: string;
+  profilePicture?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
