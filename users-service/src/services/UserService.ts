@@ -37,7 +37,13 @@ export class UserService {
       const cached = await this.cacheService.get(cacheKey);
       if (cached) {
         logger.debug(`User found in cache: ${userId}`);
-        return JSON.parse(cached);
+        const parsedUser = JSON.parse(cached);
+        
+        // Converter as datas de string para objetos Date
+        if (parsedUser.createdAt) parsedUser.createdAt = new Date(parsedUser.createdAt);
+        if (parsedUser.updatedAt) parsedUser.updatedAt = new Date(parsedUser.updatedAt);
+        
+        return parsedUser;
       }
 
       // If not in cache, get from database

@@ -19,7 +19,7 @@ export class TransactionRepository implements ITransactionRepository {
   async create(data: Partial<Transaction>): Promise<Transaction> {
     try {
       this.logger.debug(`Creating transaction: ${JSON.stringify(data)}`);
-      const transaction = this.repository.create(data);
+      const transactiuserId: string, p0: number, p1: numbersitory.create(data);
       return await this.repository.save(transaction);
     } catch (error) {
       this.logger.error(

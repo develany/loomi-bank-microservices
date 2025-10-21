@@ -28,7 +28,7 @@ export class User {
   bankingDetails: UserBankingDetails;
 
   @Column({ nullable: true })
-  profilePicture: string;
+  profilePicture: string | null;
 
   @CreateDateColumn()
   createdAt: Date;
