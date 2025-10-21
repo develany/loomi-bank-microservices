@@ -22,8 +22,8 @@ services:
       RABBITMQ_DEFAULT_USER: loomibank
       RABBITMQ_DEFAULT_PASS: loomibank123
     ports:
-      - "5672:5672" # AMQP protocol
-      - "15672:15672" # Management interface
+      - "5672:5672"  # AMQP protocol
+      - "15672:15672"  # Management interface
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
