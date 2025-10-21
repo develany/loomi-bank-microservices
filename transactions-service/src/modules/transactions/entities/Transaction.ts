@@ -1,25 +1,40 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  Index,
+} from "typeorm";
+import { TransactionStatus } from "../types/TransactionTypes";
 
-@Entity('transactions')
+@Entity("transactions")
 export class Transaction {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column()
-    senderUserId: string;
+  @Column()
+  @Index()
+  senderUserId: string;
 
-    @Column()
-    receiverUserId: string;
+  @Column()
+  @Index()
+  receiverUserId: string;
 
-    @Column('decimal', { precision: 10, scale: 2 })
-    amount: number;
+  @Column("decimal", { precision: 10, scale: 2 })
+  amount: number;
 
-    @Column({ nullable: true })
-    description: string;
+  @Column({ nullable: true })
+  description: string;
 
-    @Column({ default: 'SUCCESS' })
-    status: string;
+  @Column({
+    type: "enum",
+    enum: TransactionStatus,
+    default: TransactionStatus.SUCCESS,
+  })
+  @Index()
+  status: TransactionStatus;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @CreateDateColumn()
+  @Index()
+  createdAt: Date;
 }

@@ -1,11 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Index,
+} from "typeorm";
+import { UserBankingDetails } from "../types/UserTypes";
 
-@Entity('users')
+@Entity("users")
+@Index(["email"], { unique: true })
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
+  @Index()
   name: string;
 
   @Column({ unique: true })
@@ -14,8 +24,8 @@ export class User {
   @Column({ nullable: true })
   address: string;
 
-  @Column({ type: 'jsonb', nullable: true })
-  bankingDetails: { agency: string; account: string };
+  @Column({ type: "jsonb", nullable: true })
+  bankingDetails: UserBankingDetails;
 
   @Column({ nullable: true })
   profilePicture: string;
